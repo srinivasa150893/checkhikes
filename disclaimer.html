@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer - checkhikes.com</title>
+    <!-- Favicon: Indian Rupee Symbol (SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23fff' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+    <!-- Link to Inter and IBM Plex Sans fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* * --- Custom Styles ---
+         * This section includes the new style variables and overrides for a dark theme.
+         */
+        :root {
+            -webkit-locale: "en";
+            --color-gray-700: oklch(37.3% .034 259.733);
+            --font-weight-medium: 500;
+            --muidocs-shadows-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+            --muidocs-palette-common-white: #fff;
+            --muidocs-palette-primary-main: hsl(210, 100%, 60%);
+            --muidocs-palette-primary-dark: hsl(210, 100%, 38%);
+            --muidocs-palette-primary-mainChannel: 51 153 255;
+            --muidocs-palette-primary-light: hsl(210, 100%, 70%);
+            --muidocs-palette-text-primary: #fff;
+            --muidocs-palette-text-secondary: hsl(215, 15%, 75%);
+            --muidocs-palette-divider: hsla(210, 14%, 28%, 0.3);
+            --muidocs-palette-background-paper: hsla(210, 14%, 9%, 0.8);
+            --muidocs-palette-background-default: hsl(210, 14%, 7%);
+        }
+
+        /* Custom CSS for body and container to ensure proper layout and font */
+        body {
+            font-family: 'Inter', 'IBM Plex Sans', sans-serif; /* Using Inter font and a fallback */
+            background-color: var(--muidocs-palette-background-default); /* Dark background */
+            color: var(--muidocs-palette-text-primary); /* White text */
+            display: flex;
+            flex-direction: column; /* Changed to column to stack main content and footer */
+            align-items: center; /* Center content horizontally within the body */
+            min-height: 100vh; /* Full viewport height */
+            padding: 20px; /* Padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .container {
+            background-color: var(--muidocs-palette-background-paper); /* Darker card background */
+            border-radius: 15px; /* Rounded corners for the container */
+            box-shadow: var(--muidocs-shadows-4); /* Using shadow from new variables */
+            padding: 30px; /* Inner padding */
+            max-width: 800px; /* Adjusted max-width for better readability of long text */
+            width: 100%;
+            border: 1px solid var(--muidocs-palette-divider);
+            margin-top: 20px; /* Add some top margin to prevent sticking to top on smaller screens */
+            margin-bottom: 20px; /* Add some bottom margin */
+            flex-grow: 1; /* Allow the container to grow and push footer down */
+        }
+
+        h1 {
+            color: var(--muidocs-palette-primary-main);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--muidocs-palette-text-primary);
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--muidocs-palette-divider);
+            padding-bottom: 5px;
+        }
+
+        p, ul, ol {
+            color: var(--muidocs-palette-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify; /* Justify text for better readability */
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--muidocs-palette-primary-light);
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        a:hover {
+            color: var(--muidocs-palette-primary-main);
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--muidocs-palette-background-paper);
+            color: var(--muidocs-palette-text-secondary);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Pushes the footer to the bottom */
+            width: 100%;
+            max-width: 800px; /* Match container width */
+            border-top: 1px solid var(--muidocs-palette-divider);
+            border-radius: 15px; /* Match container border-radius */
+            box-shadow: var(--muidocs-shadows-4); /* Match container shadow */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            justify-content: center;
+            gap: 20px; /* Space between links */
+        }
+
+        .footer-nav li {
+            margin-bottom: 0; /* Remove default list item margin */
+        }
+
+        .footer-nav a {
+            color: var(--muidocs-palette-text-primary); /* Primary text color for footer links */
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color 0.2s ease-in-out;
+            padding: 5px 10px; /* Add some padding for better click area */
+            border-radius: 5px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--muidocs-palette-primary-light); /* Highlight on hover */
+            background-color: rgba(var(--muidocs-palette-primary-mainChannel), 0.1); /* Subtle background on hover */
+            text-decoration: none; /* Remove underline on hover for a cleaner look */
+        }
+
+        .footer-nav a.current-page {
+            color: var(--muidocs-palette-primary-main); /* Highlight current page */
+            font-weight: 700; /* Bolder for current page */
+            text-decoration: underline; /* Underline for current page */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+            .footer-nav ul {
+                flex-direction: column; /* Stack links vertically on small screens */
+                gap: 10px; /* Adjust gap for vertical stacking */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Disclaimer</h1>
+        <p><em>Last updated: July 21, 2025</em></p>
+
+        <p>The information provided on checkhikes.com is for general informational purposes only. All information on the Site is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.</p>
+
+        <h2>1. Not Professional Advice</h2>
+        <p>The content on checkhikes.com, including salary data, inflation rates, gold prices, and any analytics, is not intended as, and shall not be understood or construed as, financial, investment, legal, or professional advice. The information is based on anonymous user submissions and publicly available data sources, which may vary and are subject to change.</p>
+        <p>Before making any financial or career decisions, we strongly recommend that you consult with a qualified professional. Your reliance on any information provided on this Site is solely at your own risk.</p>
+
+        <h2>2. Accuracy of Information</h2>
+        <p>While we strive to provide accurate and up-to-date information, checkhikes.com cannot guarantee the absolute accuracy, completeness, or timeliness of all data presented. Salary figures, hike percentages, inflation rates, and gold prices are dynamic and can be influenced by numerous factors. The data derived from anonymous user submissions is aggregated and presented as trends, not as definitive statements for individual cases.</p>
+        <p>Historical data is based on available records, and future projections are estimates that may not reflect actual future outcomes due to unforeseen economic or market changes.</p>
+
+        <h2>3. External Links Disclaimer</h2>
+        <p>Our website may contain links to external websites that are not provided or maintained by or in any way affiliated with checkhikes.com. Please note that checkhikes.com does not guarantee the accuracy, relevance, timeliness, or completeness of any information on these external websites.</p>
+
+        <h2>4. Errors and Omissions Disclaimer</h2>
+        <p>checkhikes.com assumes no responsibility for errors or omissions in the contents on the Service.</p>
+
+        <h2>5. Fair Use Disclaimer</h2>
+        <p>checkhikes.com may use copyrighted material which has not always been specifically authorized by the copyright owner. We are making such material available in our efforts to advance understanding of economic and social issues. We believe this constitutes a 'fair use' of any such copyrighted material as provided for in section 107 of the US Copyright Law.</p>
+
+        <h2>6. Views Expressed Disclaimer</h2>
+        <p>The Service may contain views and opinions which are those of the authors and do not necessarily reflect the official policy or position of any other author, agency, organization, employer or company, including checkhikes.com.</p>
+
+        <h2>7. No Responsibility Disclaimer</h2>
+        <p>The information on the Service is provided with the understanding that checkhikes.com is not herein engaged in rendering financial, investment, legal, or other professional advice and services. As such, it should not be used as a substitute for consultation with professional financial, investment, legal, or other competent advisers.</p>
+        <p>In no event shall checkhikes.com or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever arising out of or in connection with your access or use or inability to access or use the Service.</p>
+
+        <h2>8. "Use at Your Own Risk" Disclaimer</h2>
+        <p>All information in the Service is provided "as is", with no guarantee of completeness, accuracy, timeliness or of the results obtained from the use of this information, and without warranty of any kind, express or implied, including, but not limited to warranties of performance, merchantability and fitness for a particular purpose.</p>
+        <p>checkhikes.com will not be liable to You or anyone else for any decision made or action taken in reliance on the information given by the Service or for any consequential, special or similar damages, even if advised of the possibility of such damages.</p>
+
+        <h2>9. Contact Us</h2>
+        <p>If you have any questions about this Disclaimer, please contact us:</p>
+        <ul>
+            <li>By email: <a href="mailto:admin@checkhikes.com">admin@checkhikes.com</a></li>
+        </ul>
+    </div>
+
+    <footer>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+                <li><a href="disclaimer.html" class="current-page">Disclaimer</a></li>
+                <li><a href="hike_submission.html" >Submit hike data</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2025 checkhikes.com. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

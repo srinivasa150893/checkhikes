@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkhikes.com Data Submission Page</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23fff' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (Your existing CSS styles remain unchanged) ... */
+        /* * --- Custom Styles ---
+         * This section includes the new style variables and overrides for a dark theme.
+         */
+        :root {
+            -webkit-locale: "en";
+            --color-gray-700: oklch(37.3% .034 259.733);
+            --color-gray-800: oklch(27.8% .033 256.848);
+            --font-weight-medium: 500;
+            --muidocs-shadows-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+            --muidocs-palette-common-white: #fff;
+            --muidocs-palette-primary-main: hsl(210, 100%, 60%);
+            --muidocs-palette-primary-dark: hsl(210, 100%, 38%);
+            --muidocs-palette-primary-mainChannel: 51 153 255;
+            --muidocs-palette-primary-light: hsl(210, 100%, 70%);
+            --muidocs-palette-secondary-main: hsl(210, 14%, 13%);
+            --muidocs-palette-secondary-dark: hsl(210, 14%, 9.1%);
+            --muidocs-palette-error-dark: hsl(355, 98%, 39%);
+            --muidocs-palette-warning-dark: hsl(36, 100%, 34%);
+            --muidocs-palette-success-dark: hsl(144, 72%, 37%);
+            --muidocs-palette-grey-800: hsl(215, 15%, 22%);
+            --muidocs-palette-text-primary: #fff;
+            --muidocs-palette-text-secondary: hsl(215, 15%, 75%);
+            --muidocs-palette-divider: hsla(210, 14%, 28%, 0.3);
+            --muidocs-palette-background-paper: hsla(210, 14%, 9%, 0.8);
+            --muidocs-palette-background-default: hsl(210, 14%, 7%);
+            --muidocs-palette-action-disabled: rgba(255, 255, 255, 0.3);
+            --muidocs-palette-action-disabledBackground: rgba(255, 255, 255, 0.12);
+            --muidocs-palette-Alert-errorColor: hsl(355, 98%, 93%);
+            --muidocs-palette-Alert-successColor: hsl(144, 72%, 86.4%);
+            --muidocs-palette-Alert-warningColor: hsl(48, 100%, 85.6%);
+            --muidocs-palette-Alert-errorStandardBg: hsl(355, 98%, 7.999999999999998%);
+            --muidocs-palette-Alert-successStandardBg: hsl(144, 72%, 6.599999999999999%);
+            --muidocs-palette-Alert-warningStandardBg: hsl(48, 100%, 6.399999999999999%);
+        }
+
+        /* Custom CSS for body and container to ensure proper layout and font */
+        body {
+            font-family: 'Inter', 'IBM Plex Sans', sans-serif; /* Using Inter font and a fallback */
+            background-color: var(--muidocs-palette-background-default); /* Dark background */
+            color: var(--muidocs-palette-text-primary); /* White text */
+            display: flex;
+            flex-direction: column; /* Changed to column to stack main content and footer */
+            align-items: center; /* Center content horizontally within the body */
+            min-height: 100vh; /* Full viewport height */
+            padding: 20px; /* Padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .container {
+            background-color: var(--muidocs-palette-background-paper); /* Darker card background */
+            border-radius: 15px; /* Rounded corners for the container */
+            box-shadow: var(--muidocs-shadows-4); /* Using shadow from new variables */
+            padding: 30px; /* Inner padding */
+            max-width: 500px; /* Adjusted max-width for a form */
+            width: 100%;
+            border: 1px solid var(--muidocs-palette-divider);
+            margin-top: 20px; /* Add some top margin to prevent sticking to top on smaller screens */
+            margin-bottom: 20px; /* Add some bottom margin */
+            flex-grow: 1; /* Allow the container to grow and push footer down */
+            display: flex; /* Use flexbox for inner content alignment */
+            flex-direction: column; /* Stack inner content vertically */
+            justify-content: center; /* Center content vertically within the container */
+            align-items: center; /* Center content horizontally within the container */
+        }
+        /* Styling for labels to use secondary text color */
+        label {
+            color: var(--muidocs-palette-text-secondary);
+            display: block; /* Make labels take full width */
+            margin-bottom: 8px; /* Space below label */
+            font-weight: var(--font-weight-medium);
+        }
+        /* Styling for input fields */
+        input[type="number"],
+        input[type="text"] { /* Added text type for general input */
+            background-color: var(--muidocs-palette-grey-800);
+            color: var(--muidocs-palette-text-primary);
+            padding: 10px;
+            border: 1px solid var(--muidocs-palette-gray-700);
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px; /* Space below input */
+        }
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border: 2px solid var(--muidocs-palette-primary-main); /* Thicker blue border on focus */
+            box-shadow: 0 0 0 4px rgba(var(--muidocs-palette-primary-mainChannel), 0.5); /* More pronounced glow */
+        }
+        /* Styling for the button */
+        button {
+            background-color: var(--muidocs-palette-primary-main); /* Blue background */
+            color: var(--muidocs-palette-common-white); /* White text */
+            padding: 12px 24px; /* Made the button larger and consistent */
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; /* Added box-shadow to transition */
+            border: none; /* Ensure no default border */
+            box-shadow: var(--muidocs-shadows-2); /* Apply a subtle shadow to the button */
+            font-size: 1rem; /* Adjust font size */
+            margin-top: 10px; /* Space above button */
+        }
+        button:hover {
+            background-color: var(--muidocs-palette-primary-dark); /* Darker blue on hover */
+            transform: translateY(-1px);
+            box-shadow: var(--muidocs-shadows-4); /* More pronounced shadow on hover */
+        }
+        button:active {
+            transform: translateY(0); /* Reset transform on click */
+            box-shadow: var(--muidocs-shadows-1); /* Less shadow when pressed */
+        }
+        button:disabled {
+            background-color: var(--muidocs-palette-action-disabledBackground); /* Grey out when disabled */
+            color: var(--muidocs-palette-action-disabled);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Styling for the message box (replaces alert()) */
+        .message-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+            font-weight: 500;
+            line-height: 1.5;
+            word-wrap: break-word; /* Ensure long text wraps */
+        }
+        /* Success Message */
+        .message-box.success {
+            background-color: var(--muidocs-palette-Alert-successStandardBg);
+            border: 1px solid var(--muidocs-palette-success-dark);
+            color: var(--muidocs-palette-Alert-successColor);
+        }
+        /* Error Message */
+        .message-box.error {
+            background-color: var(--muidocs-palette-Alert-errorStandardBg);
+            border: 1px solid var(--muidocs-palette-error-dark);
+            color: var(--muidocs-palette-Alert-errorColor);
+        }
+        /* Warning/Info Message */
+        .message-box.warning {
+            background-color: var(--muidocs-palette-Alert-warningStandardBg);
+            border: 1px solid var(--muidocs-palette-warning-dark);
+            color: var(--muidocs-palette-Alert-warningColor);
+        }
+
+        /* Style for the new home button */
+        .home-button {
+            background-color: var(--muidocs-palette-secondary-main); /* Use a secondary color for contrast */
+            color: var(--muidocs-palette-common-white);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: var(--muidocs-shadows-2);
+            text-decoration: none; /* For <a> tag styled as button */
+            display: inline-block; /* For <a> tag styled as button */
+            margin-top: 15px; /* Space above the home button */
+        }
+        .home-button:hover {
+            background-color: var(--muidocs-palette-secondary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--muidocs-shadows-4);
+        }
+        .home-button:active {
+            transform: translateY(0);
+            box-shadow: var(--muidocs-shadows-1);
+        }
+
+        /* Style for the terms and conditions checkbox */
+        .terms-checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; /* Space below the checkbox */
+            color: var(--muidocs-palette-text-secondary); /* Use secondary text color */
+            font-size: 0.9rem;
+        }
+        .terms-checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            width: auto; /* Override 100% width for inputs */
+            margin-bottom: 0; /* Remove bottom margin from general input style */
+            accent-color: var(--muidocs-palette-primary-main); /* Style the checkbox itself */
+        }
+        .terms-checkbox-container a {
+            color: var(--muidocs-palette-primary-light); /* Link color */
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .terms-checkbox-container a:hover {
+            color: var(--muidocs-palette-primary-main); /* Darker on hover */
+        }
+
+        /* Hide form fields after submission */
+        .form-fields {
+            transition: opacity 0.5s ease-out;
+        }
+        .form-fields.hidden {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+         /* Footer Styles */
+        footer {
+            background-color: var(--muidocs-palette-background-paper);
+            color: var(--muidocs-palette-text-secondary);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Pushes the footer to the bottom */
+            width: 100%;
+            max-width: 500px; /* Match container width */
+            border-top: 1px solid var(--muidocs-palette-divider);
+            border-radius: 15px; /* Match container border-radius */
+            box-shadow: var(--muidocs-shadows-4); /* Match container shadow */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            justify-content: center;
+            gap: 20px; /* Space between links */
+        }
+
+        .footer-nav li {
+            margin-bottom: 0; /* Remove default list item margin */
+        }
+
+        .footer-nav a {
+            color: var(--muidocs-palette-text-primary); /* Primary text color for footer links */
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color 0.2s ease-in-out;
+            padding: 5px 10px; /* Add some padding for better click area */
+            border-radius: 5px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--muidocs-palette-primary-light); /* Highlight on hover */
+            background-color: rgba(var(--muidocs-palette-primary-mainChannel), 0.1); /* Subtle background on hover */
+            text-decoration: none; /* Remove underline on hover for a cleaner look */
+        }
+
+        .footer-nav a.current-page {
+            color: var(--muidocs-palette-primary-main); /* Highlight current page */
+            font-weight: 700; /* Bolder for current page */
+            text-decoration: underline; /* Underline for current page */
+        }
+        
+        /* Spinner Styles */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--muidocs-palette-common-white); /* White spinner top */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block; /* Aligns with text if present */
+            vertical-align: middle; /* Centers vertically with text */
+            margin-left: 8px; /* Space between text and spinner */
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.2s;
+        }
+
+        .spinner.show {
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Adjust button padding to make space for spinner if button has text */
+        button.submitting {
+            padding-right: 20px; /* Adjust as needed to make space for spinner */
+            display: flex; /* Use flexbox to center content */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+            button, .home-button {
+                width: 100%; /* Full width button on small screens */
+            }
+        }
+    </style>    
+
+    
+    <script src="https://www.google.com/recaptcha/api.js?render=6Le8KIsrAAAAAG9ly7-D6Q7ejHAeuDrExcWUrQIe"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="formTitle">Submit Hike Data</h2>
+        <p id="formDescription">Please fill in the details below and click the submit button.</p>
+
+        <div id="inputFormFields">
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" placeholder="e.g., Tech Solutions Inc.">
+
+            <label for="designation">Designation:</label>
+            <input type="text" id="designation" placeholder="e.g., Software Engineer">
+
+            <label for="annualSalary">Annual Salary in Rupees:</label>
+            <input type="number" id="annualSalary" placeholder="e.g., 1500000">
+
+            <label for="hikeYear">Hike Year:</label>
+            <input type="number" id="hikeYear" placeholder="e.g., 2024">
+
+            <label for="hikePercentage">Hike Percentage:</label>
+            <input type="number" id="hikePercentage" placeholder="e.g., 10" step="0.1">
+
+            <div class="terms-checkbox-container">
+                <input type="checkbox" id="termsCheckbox">
+                <label for="termsCheckbox">I accept the <a href="./terms-and-conditions.html" target="_blank">Terms and Conditions</a></label>
+            </div>
+
+            <button id="submitButton" disabled>
+                <span>Submit data anonymously</span>
+                <span class="spinner" id="submitSpinner"></span>
+            </button>
+        </div>
+
+        <div id="messageDisplay" class="message-box">
+            </div>
+
+        <div id="homeButtonContainer" style="text-align: center; display: none;">
+            <a href="index.html" class="home-button">Go to Home Page</a>
+        </div>
+    </div>
+    <footer>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms-and-conditions.html" >Terms and Conditions</a></li>
+                <li><a href="disclaimer.html">Disclaimer</a></li>
+                <li><a href="hike_submission.html" class="current-page">Submit hike data</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2025 checkhikes.com. All rights reserved.</p>
+    </footer>
+
+
+<script type="module">
+    
+    // <--- IMPORTANT: ADD type="module" HERE
+    // Import the necessary modular functions
+    // --- ADD THIS IMPORT STATEMENT ---
+    import { firebaseConfig } from './firebase-config.js'; 
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js';
+    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-functions.js';
+
+   
+
+    // Initialize Firebase App (Modular SDK)
+    const app = initializeApp(firebaseConfig);
+    
+    const db = getFirestore(app); // Get a reference to the Firestore database (Modular SDK)
+
+    // Get the Functions instance and SPECIFY THE REGION HERE (Modular SDK)
+    const functionsInstance = getFunctions(app, 'asia-south1'); // <--- CRITICAL CHANGE
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submitButton');
+        const submitButtonText = submitButton.querySelector('span'); // Get the text span
+        const submitSpinner = document.getElementById('submitSpinner'); // Get the spinner span
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const inputFormFields = document.getElementById('inputFormFields');
+        const homeButtonContainer = document.getElementById('homeButtonContainer');
+        const formTitle = document.getElementById('formTitle');
+        const formDescription = document.getElementById('formDescription');
+
+        // Initially disable the submit button
+        submitButton.disabled = true;
+
+        // Add event listener to the checkbox
+        // Adjust the termsCheckbox listener to initially display the button text
+        termsCheckbox.addEventListener('change', function() {
+            submitButton.disabled = !this.checked;
+            if (this.checked) {
+                submitButtonText.style.display = 'inline'; // Ensure text is visible when button becomes enabled
+            } else {
+                submitButtonText.style.display = 'inline'; // Keep text visible if unchecked
+            }
+            submitSpinner.classList.remove('show'); // Ensure spinner is hidden if checkbox is unchecked
+            submitButton.classList.remove('submitting'); // Remove submitting class
+        });
+
+        submitButton.addEventListener('click', async function() { // Added 'async'
+
+            submitButton.disabled = true; // Disable button immediately
+            submitButton.classList.add('submitting'); // Add class for potential padding adjustments
+            submitButtonText.style.display = 'none'; // Hide text
+            submitSpinner.classList.add('show'); // Show spinner
+
+            // Clear previous messages and hide home button
+            messageDisplay.style.display = 'none';
+            messageDisplay.className = 'message-box'; // Reset classes
+            homeButtonContainer.style.display = 'none';
+            // Ensure checkbox is checked before proceeding (double-check for security/robustness)
+            if (!termsCheckbox.checked) {
+                showMessage('Please accept the Terms and Conditions to submit data.', 'error');
+                // Re-enable button state
+                submitButton.disabled = false;
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline';
+                submitSpinner.classList.remove('show');
+                return;
+            }
+
+            const companyName = document.getElementById('companyName').value.trim();
+            const designation = document.getElementById('designation').value.trim();
+            const annualSalary = document.getElementById('annualSalary').value;
+            const hikeYear = document.getElementById('hikeYear').value;
+            const hikePercentage = document.getElementById('hikePercentage').value;
+
+
+            // Clear previous messages and hide home button
+            messageDisplay.style.display = 'none';
+            messageDisplay.className = 'message-box'; // Reset classes
+            homeButtonContainer.style.display = 'none';
+
+            // Basic validation
+            if (!companyName || !designation || annualSalary === '' || isNaN(annualSalary) ||
+                hikeYear === '' || isNaN(hikeYear) || hikePercentage === '' || isNaN(hikePercentage)) {
+                showMessage('Please fill in all fields with valid data.', 'error');
+                // Re-enable button state
+                submitButton.disabled = false;
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline';
+                submitSpinner.classList.remove('show');
+                return; // Stop execution if validation fails
+            }
+
+            // --- NEW VALIDATIONS ---
+            const currentYear = new Date().getFullYear();
+            const inputHikeYear = parseInt(hikeYear);
+            const inputHikePercentage = parseFloat(hikePercentage);
+
+            if (inputHikeYear > currentYear + 1) {
+                showMessage(`Hike Year cannot be more than one year beyond the current year (${currentYear}). Please enter a year up to ${currentYear + 1}.`, 'error');
+                // Re-enable button state
+                submitButton.disabled = false;
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline';
+                submitSpinner.classList.remove('show');
+                return;
+            }
+
+            if (inputHikePercentage > 1000) {
+                showMessage('Hike Percentage cannot be more than 1000%.', 'error');
+                // Re-enable button state
+                submitButton.disabled = false;
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline';
+                submitSpinner.classList.remove('show');
+                return;
+            }
+            // --- END NEW VALIDATIONS ---
+
+
+            // NEW: Execute reCAPTCHA to get a token
+            let recaptchaToken;
+            try {
+                // Replace 'submitHike' with an action name relevant to your form
+                recaptchaToken = await grecaptcha.execute('6Le8KIsrAAAAAG9ly7-D6Q7ejHAeuDrExcWUrQIe', {action: 'submitHike'});
+                console.log("reCAPTCHA token generated:", recaptchaToken);
+            } catch (recaptchaError) {
+                console.error("Error generating reCAPTCHA token:", recaptchaError);
+                showMessage('Could not verify reCAPTCHA. Please try again.', 'error');
+                // Re-enable button state
+                submitButton.disabled = false;
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline';
+                submitSpinner.classList.remove('show');
+                return;
+            }
+
+            // Data to be submitted to Firebase (now includes reCAPTCHA token)
+            const hikeData = {
+                companyName: companyName,
+                designation: designation,
+                annualSalary: parseFloat(annualSalary), // Store as number
+                hikeYear: inputHikeYear,          // Store as number
+                hikePercentage: inputHikePercentage, // Store as number
+                recaptchaToken: recaptchaToken // NEW: Add the reCAPTCHA token
+                // timestamp will be added by the Cloud Function
+            };
+
+            // NEW: Call the Cloud Function instead of directly writing to Firestore
+            try {
+                // *** THIS IS THE CRITICAL CHANGE FOR MODULAR SDK ***
+                // Get the callable function reference using the functionsInstance with the region
+                const submitHikeDataFunction = httpsCallable(functionsInstance, 'submitHikeData'); 
+                const result = await submitHikeDataFunction(hikeData);
+                // --- NEW: Hide spinner and reset button on SUCCESS ---
+                submitSpinner.classList.remove('show');
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline'; // Show text again (though button will be hidden)
+                // Check the result from the Cloud Function
+                if (result.data && result.data.success) {
+                    // If submission is successful:
+                    // Hide the input form fields and form description/title
+                    inputFormFields.style.display = 'none';
+                    formTitle.style.display = 'none';
+                    formDescription.style.display = 'none';
+
+                    // Display the thank you message
+                    showMessage(`Thanks for submitting data! The data has been securely processed. Share the website with your friends/Colleagues.`, 'success');
+
+                    // Show the home button
+                    homeButtonContainer.style.display = 'block';
+
+                    // Optional: Clear input fields after successful submission (though they are hidden now)
+                    document.getElementById('companyName').value = '';
+                    document.getElementById('designation').value = '';
+                    document.getElementById('annualSalary').value = '';
+                    document.getElementById('hikeYear').value = '';
+                    document.getElementById('hikePercentage').value = '';
+                    termsCheckbox.checked = false; // Uncheck terms checkbox
+                    submitButton.disabled = true; // Disable button again
+                } else {
+                    // If the Cloud Function indicated an error
+                    const errorMessage = result.data && result.data.message ? result.data.message : 'Submission failed due to an unknown error.';
+                    showMessage(`Submission failed: ${errorMessage}`, 'error');
+                    // Re-enable form fields if there's an error
+                    inputFormFields.style.display = 'block';
+                    formTitle.style.display = 'block';
+                    formDescription.style.display = 'block';
+                }
+
+            } catch (error) {
+                // --- NEW: Hide spinner and reset button on ERROR ---
+                submitSpinner.classList.remove('show');
+                submitButton.classList.remove('submitting');
+                submitButtonText.style.display = 'inline'; // Show text again
+                submitButton.disabled = false; // Re-enable button on error for user to retry
+                console.error("Error calling Cloud Function: ", error);
+                // Check if it's a Firebase Functions error specifically
+                if (error.code && error.code.startsWith('functions/')) {
+                     showMessage(`Error from Cloud Function: ${error.message} (Code: ${error.code})`, 'error');
+                } else {
+                    showMessage(`There was an error submitting your data. Please check your browser's console for details. (${error.message})`, 'error');
+                }
+               
+                // Re-enable form fields if there's an error
+                inputFormFields.style.display = 'block';
+                formTitle.style.display = 'block';
+                formDescription.style.display = 'block';
+            }
+        });
+
+        // Helper function to display messages dynamically
+        function showMessage(message, type) {
+            messageDisplay.textContent = message;
+            messageDisplay.className = `message-box ${type}`; // Set class based on type (success, error, warning)
+            messageDisplay.style.display = 'block';
+        }
+    });
+
+    // Function to navigate to another page (kept for general utility)
+    function navigateToPage(url) {
+        window.location.href = url;
+    }
+</script>
+
+</body>
+</html>

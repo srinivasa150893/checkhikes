@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkhikes.com</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23fff' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+    <link href="./public/output.css" rel="stylesheet">
+    <style>
+        /* * --- Custom Styles ---
+         * This section includes the new style variables and overrides for a dark theme.
+         */
+        :root {
+            -webkit-locale: "en";
+            --muidocs-shadows-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+            --muidocs-palette-common-white: #fff;
+            --muidocs-palette-primary-main: hsl(210, 100%, 60%);
+            --muidocs-palette-primary-dark: hsl(210, 100%, 38%);
+            --muidocs-palette-error-main: hsl(355, 98%, 66%);
+            --muidocs-palette-error-light: hsl(355, 98%, 80%);
+            --muidocs-palette-error-dark: hsl(355, 98%, 39%);
+            --muidocs-palette-warning-main: hsl(48, 100%, 44%);
+            --muidocs-palette-warning-light: hsl(48, 100%, 64%);
+            --muidocs-palette-warning-dark: hsl(36, 100%, 34%);
+            --muidocs-palette-info-main: #29b6f6;
+            --muidocs-palette-info-light: #4fc3f7;
+            --muidocs-palette-success-main: hsl(144, 72%, 41%);
+            --muidocs-palette-success-light: hsl(144, 72%, 66%);
+            --muidocs-palette-success-dark: hsl(144, 72%, 37%);
+            --muidocs-palette-grey-300: hsl(215, 15%, 82%);
+            --muidocs-palette-grey-600: hsl(215, 15%, 50%);
+            --muidocs-palette-grey-700: hsl(215, 15%, 40%);
+            --muidocs-palette-grey-800: hsl(215, 15%, 22%);
+            --muidocs-palette-grey-900: hsl(215, 15%, 12%);
+            --muidocs-palette-text-primary: #fff;
+            --muidocs-palette-text-secondary: hsl(215, 15%, 75%);
+            --muidocs-palette-text-disabled: rgba(255, 255, 255, 0.5);
+            --muidocs-palette-divider: hsla(210, 14%, 28%, 0.3);
+            --muidocs-palette-background-paper: hsla(210, 14%, 9%, 0.8);
+            --muidocs-palette-background-default: hsl(210, 14%, 7%);
+            --muidocs-palette-Alert-errorColor: hsl(355, 98%, 92%);
+            --muidocs-palette-Alert-infoColor: rgb(184, 231, 251);
+            --muidocs-palette-Alert-successColor: hsl(144, 72%, 86.4%);
+            --muidocs-palette-Alert-warningColor: hsl(48, 100%, 85.6%);
+            --muidocs-palette-Alert-errorStandardBg: hsl(355, 98%, 7.999999999999998%);
+            --muidocs-palette-Alert-infoStandardBg: rgb(7, 19, 24);
+            --muidocs-palette-Alert-successStandardBg: hsl(144, 72%, 6.599999999999999%);
+            --muidocs-palette-Alert-warningStandardBg: hsl(48, 100%, 6.399999999999999%);
+        }
+
+        /* Custom CSS for body and container to ensure proper layout and font */
+        body {
+            font-family: 'Inter', 'IBM Plex Sans', sans-serif; /* Using Inter font and a fallback */
+            background-color: var(--muidocs-palette-background-default); /* Dark background */
+            color: var(--muidocs-palette-text-primary); /* White text */
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            min-height: 100vh; /* Full viewport height */
+            padding: 20px; /* Padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .container {
+            background-color: var(--muidocs-palette-background-paper); /* Darker card background */
+            border-radius: 15px; /* Rounded corners for the container */
+            box-shadow: var(--muidocs-shadows-4); /* Using shadow from new variables */
+            padding: 30px; /* Inner padding */
+            max-width: 1000px;
+            width: 100%;
+            border: 1px solid var(--muidocs-palette-divider);
+            margin: 0 auto; /* Center the container horizontally */
+        }
+        /* Styling for labels to use secondary text color */
+        label {
+            color: var(--muidocs-palette-text-secondary);
+        }
+        /* Styling for input fields */
+        input[type="number"] {
+            background-color: var(--muidocs-palette-grey-800);
+            color: var(--muidocs-palette-text-primary);
+            padding: 10px;
+            border: 1px solid var(--muidocs-palette-grey-700);
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--muidocs-palette-primary-main); /* Blue border on focus */
+        }
+        /* Styling for the button */
+        button {
+            background-color: var(--muidocs-palette-primary-main); /* Blue background */
+            color: var(--muidocs-palette-common-white); /* White text */
+            padding: 8px 16px; /* Made the button smaller */
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background-color: var(--muidocs-palette-success-main); /* Changed hover to green */
+            transform: translateY(-1px);
+        }
+
+        
+        /* Styling for the results table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--muidocs-palette-divider);
+        }
+        th {
+            background-color: var(--muidocs-palette-grey-900);
+            font-weight: 600;
+            color: var(--muidocs-palette-text-secondary);
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        /* Styling for the message box (replaces alert()) */
+        .message-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+            font-weight: 500;
+        }
+        /* Success Message */
+        .message-box.success {
+            background-color: var(--muidocs-palette-Alert-successStandardBg);
+            border: 1px solid var(--muidocs-palette-success-dark);
+            color: var(--muidocs-palette-Alert-successColor);
+        }
+        /* Error Message */
+        .message-box.error {
+            background-color: var(--muidocs-palette-Alert-errorStandardBg);
+            border: 1px solid var(--muidocs-palette-error-dark);
+            color: var(--muidocs-palette-Alert-errorColor);
+        }
+        /* Warning/Info Message */
+        .message-box.warning {
+            background-color: var(--muidocs-palette-Alert-warningStandardBg);
+            border: 1px solid var(--muidocs-palette-warning-dark);
+            color: var(--muidocs-palette-Alert-warningColor);
+        }
+        .comparison-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .comparison-message.increase {
+            background-color: var(--muidocs-palette-Alert-successStandardBg);
+            color: var(--muidocs-palette-success-light);
+            border: 1px solid var(--muidocs-palette-success-main);
+        }
+        .comparison-message.decrease {
+            background-color: var(--muidocs-palette-Alert-errorStandardBg);
+            color: var(--muidocs-palette-error-light);
+            border: 1px solid var(--muidocs-palette-error-main);
+        }
+        .comparison-message.same {
+            background-color: var(--muidocs-palette-Alert-infoStandardBg);
+            color: var(--muidocs-palette-info-light);
+            border: 1px solid var(--muidocs-palette-info-main);
+        }
+        /* Style for highlighting the initial year row */
+        .initial-year-row {
+            background-color: var(--muidocs-palette-primary-dark);
+            font-weight: bold;
+            border: 2px solid var(--muidocs-palette-primary-main);
+        }
+
+        /* New CSS class for the button */
+        .blue-shadow-button {
+            background-color: #3B82F6; /* A nice shade of blue */
+            color: #FFFFFF; /* White text */
+            padding: 8px 16px; /* Made the button smaller */
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        /* Hover effect */
+        .blue-shadow-button:hover {
+            background-color: var(--muidocs-palette-success-main); /* Changed hover to green */
+            transform: translateY(-1px);
+        }
+
+        /* Active (click) effect */
+        .blue-shadow-button:active {
+            transform: translateY(1px); /* Slight press down effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* Smaller shadow when pressed */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--muidocs-palette-background-paper);
+            color: var(--muidocs-palette-text-secondary);
+            text-align: center;
+            padding: 20px;
+            margin: 20px auto 0 auto; /* Pushes the footer to the bottom and centers it */
+            width: 100%;
+            max-width: 1000px; /* Match container width */
+            border-top: 1px solid var(--muidocs-palette-divider);
+            border-radius: 15px; /* Match container border-radius */
+            box-shadow: var(--muidocs-shadows-4); /* Match container shadow */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            justify-content: center;
+            gap: 20px; /* Space between links */
+        }
+
+        .footer-nav li {
+            margin-bottom: 0; /* Remove default list item margin */
+        }
+
+        .footer-nav a {
+            color: var(--muidocs-palette-text-primary); /* Primary text color for footer links */
+            text-decoration: none;
+            font-weight: 500; 
+            transition: color 0.2s ease-in-out;
+            padding: 5px 10px; /* Add some padding for better click area */
+            border-radius: 5px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--muidocs-palette-primary-main); /* Highlight on hover */
+            background-color: rgba(41, 182, 246, 0.1); /* Subtle background on hover (used a direct rgba value as primary-mainChannel was unused) */
+            text-decoration: none; /* Remove underline on hover for a cleaner look */
+        }
+
+        .footer-nav a.current-page {
+            color: var(--muidocs-palette-primary-main); /* Highlight current page */
+            font-weight: 700; /* Bolder for current page */
+            text-decoration: underline; /* Underline for current page */
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-3xl font-extrabold text-gray-100 mb-6 text-center"><a href="index.html" >checkhikes.com</a></h1>
+        <h2 class="text-3xl font-extrabold text-gray-100 mb-6 text-center">Purchasing Power Calculator (India)</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label for="initialSalary" class="block text-sm font-semibold mb-2">Initial Annual Salary (₹):</label>
+                <input type="number" id="initialSalary" placeholder="e.g., 500000" class="shadow-sm">
+            </div>
+            <div>
+                <label for="initialYear" class="block text-sm font-semibold mb-2">Initial Year:</label>
+                <input type="number" id="initialYear" placeholder="e.g., 2023" class="shadow-sm">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label for="projectionYears" class="block text-sm font-semibold mb-2">Number of Years to Project (Forward):</label>
+                <input type="number" id="projectionYears" placeholder="e.g., 1 (default)" max="300" class="shadow-sm">
+            </div>
+            <div>
+                <label for="historyYears" class="block text-sm font-semibold mb-2">Number of Years to Project (Backward):</label>
+                <input type="number" id="historyYears" placeholder="e.g., 0 (default)" max="300" class="shadow-sm">
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label for="hikePercentage" class="block text-sm font-semibold mb-2">Annual Hike Percentage (%):</label>
+            <input type="number" id="hikePercentage" placeholder="e.g., 0 (default)" max="1000" class="shadow-sm">
+        </div>
+
+        <button onclick="calculatePurchasingPower()" class="blue-shadow-button">Calculate Purchasing Power</button>
+        
+        <div class="text-center mt-4">
+        <a href="./hike_submission.html" class="blue-shadow-button">
+            Want to submit anonymous data?
+        </a>
+    </div>
+        <div id="messageBox" class="message-box"></div>
+
+        <div id="results" class="mt-8">
+            <h2 class="text-2xl font-bold text-gray-200 mb-4">Results:</h2>
+            <div class="overflow-x-auto">
+                <table id="resultsTable" class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Inflation Rate (%)</th>
+                            <th>Initial Salary's Purchasing Power (₹)</th>
+                            <th>Actual Salary (with Hike) (₹)</th>
+                            <th>Required Salary to Maintain Initial Purchasing Power (₹)</th>
+                            <th>Gold Price (₹/10g, 24K)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-400 mt-4">
+                *Inflation rates are based on historical CPI data for India and projections for future years. For years beyond 2027 or before 1987, an assumed average inflation rate of 4.00% is used.
+                Gold prices marked with an asterisk (*) are future predicted annual averages. Historical gold prices are approximate annual averages. Gold prices for years outside the 1964-2034 range are not available in this calculator.
+            </p>
+            <div id="comparisonMessage" class="comparison-message hidden"></div>
+        </div>
+    </div>
+    <footer>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="index.html" class="current-page">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms-and-conditions.html" >Terms and Conditions</a></li>
+                <li><a href="disclaimer.html">Disclaimer</a></li>
+                <li><a href="hike_submission.html" >Submit hike data</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2025 checkhikes.com. All rights reserved.</p>
+    </footer>
+    <script>
+        // --- Inflation Data ---
+        // Hardcoded historical and projected annual inflation rates for India (Consumer Price Index - CPI).
+        // Sources: Wikipedia, Trading Economics, Ministry of Statistics and Programme Implementation (MoSPI), Forbes India, Times of India.
+        const inflationData = {
+            1987: 9.06, 1988: 7.21, 1989: 4.57, 1990: 11.2, 1991: 13.48, 1992: 9.86, 
+            1993: 7.28, 1994: 10.28, 1995: 9.96, 1996: 9.43, 1997: 6.84, 1998: 13.13, 
+            1999: 5.7, 2000: 3.83, 2001: 4.31, 2002: 3.98, 2003: 3.86, 2004: 3.82, 
+            2005: 4.4, 2006: 6.7, 2007: 6.2, 2008: 9.09, 2009: 12.31, 2010: 9.37, 2011: 8.11, 2012: 10.05, 
+            2013: 10.02, 2014: 6.67, 2015: 4.91, 2016: 4.95, 2017: 3.33, 2018: 3.94,
+            2019: 3.73, 2020: 6.62, 2021: 5.13, 2022: 6.70, 2023: 5.49, 2024: 4.95,
+            2025: 2.70, 2026: 3.90, 2027: 3.80
+        };
+        const defaultFutureInflation = 4.00;
+
+        // --- Gold Price Data ---
+        // Hardcoded historical and predicted annual average gold prices for 24-carat gold per 10 grams in India.
+        const goldPriceData = {
+            2012:   31050.00, 2011: 26400.00, 2010: 18500.00, 2009: 14500.00, 2008: 12500.00, 
+            2007:   10800.00, 2006: 8490.00, 2005:  7000.00, 2004:  5850.00, 2003:  5600.00, 
+            2002:   4990.00, 2001:  4300.00, 2000:  4400.00, 1999:  4234.00, 1998:  4045.00, 
+            1997:   4725.00, 1996:  5160.00, 1995:  4680.00, 1994:  4598.00, 1993:  4140.00, 
+            1992:   4334.00, 1991:  3466.00, 1990:  3200.00, 1989:  3140.00, 1988:  3130.00, 
+            1987:   2570.00, 1986:  2140.00, 1985:  2130.00, 1984:  1970.00, 1983:  1800.00, 
+            1982:   1645.00, 1981:  1670.00, 1980:  1330.00, 1979:  937.00, 1978:   685.00, 
+            1977:   486.00, 1976:   432.00, 1975:   540.00, 1974:   506.00, 1973:   278.50, 
+            1972:   202.00, 1971:   193.00, 1970:   184.00, 1969:   176.00, 1968:   162.00, 
+            1967:   102.50, 1966:   83.75, 1965:    71.75, 1964:    63.25,
+            2013: 29600.00, 2014: 28006.50, 2015: 26343.50, 2016: 28623.50, 2017: 29667.50,
+            2018: 31438.00, 2019: 35220.00, 2020: 48651.00, 2021: 48720.00, 2022: 52670.00,
+            2023: 65330.00, 2024: 77913.00, 2025: 91600.00, 2026: 80095.00, 2027: 83270.00,
+            2028: 92739.00, 2029: 101786.00, 2030: 111679.00, 2031: 121704.00, 2032: 126650.00,
+            2033: 132443.00, 2034: 141443.00
+        };
+
+        // --- Message Box Functionality ---
+        function showMessage(message, type = 'warning') {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = `message-box ${type}`; // Use CSS classes for styling
+            messageBox.style.display = 'block';
+        }
+
+        function hideMessage() {
+            document.getElementById('messageBox').style.display = 'none';
+        }
+
+        function hideComparisonMessage() {
+            const comparisonMessageDiv = document.getElementById('comparisonMessage');
+            comparisonMessageDiv.classList.add('hidden');
+            comparisonMessageDiv.className = 'comparison-message hidden';
+            comparisonMessageDiv.textContent = '';
+        }
+
+        // --- Main Calculation Logic ---
+        function calculatePurchasingPower() {
+            hideMessage();
+            hideComparisonMessage();
+
+            const initialSalary = parseFloat(document.getElementById('initialSalary').value);
+            const initialYear = parseInt(document.getElementById('initialYear').value);
+            const projectionYears = parseInt(document.getElementById('projectionYears').value || '1');
+            const historyYears = parseInt(document.getElementById('historyYears').value || '0');
+            const hikePercentage = parseFloat(document.getElementById('hikePercentage').value || '0');
+            const resultsTableBody = document.querySelector('#resultsTable tbody');
+            const comparisonMessageDiv = document.getElementById('comparisonMessage');
+
+            // --- Input Validation ---
+            if (isNaN(initialSalary) || initialSalary <= 0) {
+                showMessage('Please enter a valid positive initial annual salary.', 'error');
+                return;
+            }
+            const currentActualYear = new Date().getFullYear();
+            if (isNaN(initialYear) || initialYear < 1986 || initialYear > currentActualYear) {
+                showMessage(`Please enter a valid initial year between 1987 and ${currentActualYear}.`, 'error');
+                return;
+            }
+            if (projectionYears < 0 || historyYears < 0 || isNaN(hikePercentage) || hikePercentage < 0) {
+                showMessage('Please enter valid non-negative numbers for all percentage and year inputs.', 'error');
+                return;
+            }
+            
+            // New Validation for limits
+            if (projectionYears > 300) {
+                showMessage('Number of years to project forward cannot exceed 300.', 'error');
+                return;
+            }
+            if (historyYears > 300) {
+                showMessage('Number of years to project backward cannot exceed 300.', 'error');
+                return;
+            }
+            if (hikePercentage > 1000) {
+                showMessage('Annual hike percentage cannot exceed 1000%.', 'error');
+                return;
+            }
+
+
+            resultsTableBody.innerHTML = '';
+            let resultsData = [];
+            let currentInitialSalaryPurchasingPower = initialSalary;
+            let currentActualSalaryWithHike = initialSalary;
+            let finalProjectedYearRealValue = 0;
+
+            const initialYearGoldPrice = goldPriceData[initialYear];
+            const initialYearGoldPriceDisplay = initialYearGoldPrice !== undefined ? `₹ ${initialYearGoldPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'N/A';
+
+            resultsData.push({
+                year: initialYear,
+                inflation: 'N/A',
+                initialSalaryPurchasingPower: initialSalary,
+                actualSalaryWithHike: initialSalary,
+                requiredSalaryToMaintainPP: initialSalary,
+                goldPrice: initialYearGoldPriceDisplay
+            });
+
+            // --- Calculate Future Years ---
+            for (let i = 1; i <= projectionYears; i++) {
+                const year = initialYear + i;
+                const inflationRate = inflationData[year] || defaultFutureInflation;
+                let goldPrice = goldPriceData[year];
+                let goldPriceDisplay = 'N/A';
+
+                if (goldPrice !== undefined) {
+                    const asterisk = year > currentActualYear ? '*' : '';
+                    goldPriceDisplay = `₹ ${goldPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${asterisk}`;
+                }
+
+                currentInitialSalaryPurchasingPower /= (1 + (inflationRate / 100));
+                currentActualSalaryWithHike *= (1 + (hikePercentage / 100));
+
+                let requiredSalaryToMaintainPP = initialSalary;
+                for (let j = initialYear + 1; j <= year; j++) {
+                    requiredSalaryToMaintainPP *= (1 + ((inflationData[j] || defaultFutureInflation) / 100));
+                }
+
+                resultsData.push({
+                    year: year,
+                    inflation: inflationRate,
+                    initialSalaryPurchasingPower: currentInitialSalaryPurchasingPower,
+                    actualSalaryWithHike: currentActualSalaryWithHike,
+                    requiredSalaryToMaintainPP: requiredSalaryToMaintainPP,
+                    goldPrice: goldPriceDisplay
+                });
+            }
+
+            if (projectionYears > 0) {
+                let cumulativeInflationFactor = 1;
+                for (let y = initialYear + 1; y <= initialYear + projectionYears; y++) {
+                    cumulativeInflationFactor *= (1 + ((inflationData[y] || defaultFutureInflation) / 100));
+                }
+                finalProjectedYearRealValue = currentActualSalaryWithHike / cumulativeInflationFactor;
+            } else {
+                finalProjectedYearRealValue = initialSalary;
+            }
+
+            // --- Calculate Past Years ---
+            let currentInitialSalaryPurchasingPowerPast = initialSalary;
+            for (let i = 1; i <= historyYears; i++) {
+                const year = initialYear - i;
+                const inflationRate = inflationData[year + 1] || defaultFutureInflation;
+                let goldPrice = goldPriceData[year];
+                let goldPriceDisplay = goldPrice !== undefined ? `₹ ${goldPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'N/A';
+
+                currentInitialSalaryPurchasingPowerPast *= (1 + (inflationRate / 100));
+
+                let requiredSalaryToMaintainPP = initialSalary;
+                for (let j = initialYear; j > year; j--) {
+                    requiredSalaryToMaintainPP /= (1 + ((inflationData[j] || defaultFutureInflation) / 100));
+                }
+
+                resultsData.push({
+                    year: year,
+                    inflation: inflationRate,
+                    initialSalaryPurchasingPower: currentInitialSalaryPurchasingPowerPast,
+                    actualSalaryWithHike: 'N/A',
+                    requiredSalaryToMaintainPP: requiredSalaryToMaintainPP,
+                    goldPrice: goldPriceDisplay
+                });
+            }
+
+            resultsData.sort((a, b) => a.year - b.year);
+
+            // Populate the table
+            resultsData.forEach(data => {
+                const row = resultsTableBody.insertRow();
+                row.insertCell().textContent = data.year;
+                row.insertCell().textContent = data.inflation === 'N/A' ? 'N/A' : `${data.inflation.toFixed(2)}%`;
+                row.insertCell().textContent = `₹ ${data.initialSalaryPurchasingPower.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                row.insertCell().textContent = data.actualSalaryWithHike === 'N/A' ? 'N/A' : `₹ ${data.actualSalaryWithHike.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                row.insertCell().textContent = `₹ ${data.requiredSalaryToMaintainPP.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                row.insertCell().textContent = data.goldPrice;
+
+                if (data.year === initialYear) {
+                    row.classList.add('initial-year-row');
+                }
+            });
+
+            // --- Display Comparison Message ---
+            let comparisonText = '';
+            let comparisonClass = '';
+            const initialSalaryOriginalPP = initialSalary;
+
+            if (finalProjectedYearRealValue > initialSalaryOriginalPP) {
+                const percentageIncrease = ((finalProjectedYearRealValue - initialSalaryOriginalPP) / initialSalaryOriginalPP) * 100;
+                comparisonText = `Great news! Your purchasing power in ${initialYear + projectionYears} has *increased* by approx. ${percentageIncrease.toFixed(2)}% compared to ${initialYear}. 😍`;
+                comparisonClass = 'increase';
+            } else if (finalProjectedYearRealValue < initialSalaryOriginalPP) {
+                const percentageDecrease = ((initialSalaryOriginalPP - finalProjectedYearRealValue) / initialSalaryOriginalPP) * 100;
+                comparisonText = `Heads up! Your purchasing power in ${initialYear + projectionYears} has *decreased* by approx. ${percentageDecrease.toFixed(2)}% compared to ${initialYear}, check with your manager/owner and ask for a raise. Share this website with your friends and managers 🤗🤗. Submit data anonymously to see more insights next time 😊 `;
+                comparisonClass = 'decrease';
+            } else {
+                comparisonText = `Your purchasing power in ${initialYear + projectionYears} remains about the same as in ${initialYear}.`;
+                comparisonClass = 'same';
+            }
+
+            comparisonMessageDiv.textContent = comparisonText;
+            comparisonMessageDiv.classList.remove('hidden');
+            comparisonMessageDiv.classList.add(comparisonClass);
+
+            showMessage('Calculation complete! Your results are displayed below.', 'success');
+        }
+    </script>
+</body> 
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - checkhike.com</title>
+    <!-- Favicon: Indian Rupee Symbol (SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23fff' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+    <!-- Link to Inter and IBM Plex Sans fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* * --- Custom Styles ---
+         * This section includes the new style variables and overrides for a dark theme.
+         */
+        :root {
+            -webkit-locale: "en";
+            --color-gray-700: oklch(37.3% .034 259.733);
+            --font-weight-medium: 500;
+            --muidocs-shadows-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+            --muidocs-shadows-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+            --muidocs-palette-common-white: #fff;
+            --muidocs-palette-primary-main: hsl(210, 100%, 60%);
+            --muidocs-palette-primary-dark: hsl(210, 100%, 38%);
+            --muidocs-palette-primary-mainChannel: 51 153 255;
+            --muidocs-palette-primary-light: hsl(210, 100%, 70%);
+            --muidocs-palette-text-primary: #fff;
+            --muidocs-palette-text-secondary: hsl(215, 15%, 75%);
+            --muidocs-palette-divider: hsla(210, 14%, 28%, 0.3);
+            --muidocs-palette-background-paper: hsla(210, 14%, 9%, 0.8);
+            --muidocs-palette-background-default: hsl(210, 14%, 7%);
+        }
+
+        /* Custom CSS for body and container to ensure proper layout and font */
+        body {
+            font-family: 'Inter', 'IBM Plex Sans', sans-serif; /* Using Inter font and a fallback */
+            background-color: var(--muidocs-palette-background-default); /* Dark background */
+            color: var(--muidocs-palette-text-primary); /* White text */
+            display: flex;
+            flex-direction: column; /* Changed to column to stack main content and footer */
+            align-items: center; /* Center content horizontally within the body */
+            min-height: 100vh; /* Full viewport height */
+            padding: 20px; /* Padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .container {
+            background-color: var(--muidocs-palette-background-paper); /* Darker card background */
+            border-radius: 15px; /* Rounded corners for the container */
+            box-shadow: var(--muidocs-shadows-4); /* Using shadow from new variables */
+            padding: 30px; /* Inner padding */
+            max-width: 800px; /* Adjusted max-width for better readability of long text */
+            width: 100%;
+            border: 1px solid var(--muidocs-palette-divider);
+            margin-top: 20px; /* Add some top margin to prevent sticking to top on smaller screens */
+            margin-bottom: 20px; /* Add some bottom margin */
+            flex-grow: 1; /* Allow the container to grow and push footer down */
+        }
+
+        h1 {
+            color: var(--muidocs-palette-primary-main);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--muidocs-palette-text-primary);
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--muidocs-palette-divider);
+            padding-bottom: 5px;
+        }
+
+        p, ul, ol {
+            color: var(--muidocs-palette-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify; /* Justify text for better readability */
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--muidocs-palette-primary-light);
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        a:hover {
+            color: var(--muidocs-palette-primary-main);
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--muidocs-palette-background-paper);
+            color: var(--muidocs-palette-text-secondary);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Pushes the footer to the bottom */
+            width: 100%;
+            max-width: 800px; /* Match container width */
+            border-top: 1px solid var(--muidocs-palette-divider);
+            border-radius: 15px; /* Match container border-radius */
+            box-shadow: var(--muidocs-shadows-4); /* Match container shadow */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            justify-content: center;
+            gap: 20px; /* Space between links */
+        }
+
+        .footer-nav li {
+            margin-bottom: 0; /* Remove default list item margin */
+        }
+
+        .footer-nav a {
+            color: var(--muidocs-palette-text-primary); /* Primary text color for footer links */
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color 0.2s ease-in-out;
+            padding: 5px 10px; /* Add some padding for better click area */
+            border-radius: 5px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--muidocs-palette-primary-light); /* Highlight on hover */
+            background-color: rgba(var(--muidocs-palette-primary-mainChannel), 0.1); /* Subtle background on hover */
+            text-decoration: none; /* Remove underline on hover for a cleaner look */
+        }
+
+        .footer-nav a.current-page {
+            color: var(--muidocs-palette-primary-main); /* Highlight current page */
+            font-weight: 700; /* Bolder for current page */
+            text-decoration: underline; /* Underline for current page */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+            .footer-nav ul {
+                flex-direction: column; /* Stack links vertically on small screens */
+                gap: 10px; /* Adjust gap for vertical stacking */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p><em>Last updated: July 21, 2025</em></p>
+
+        <p>Your privacy is of utmost importance to us at checkhikes.com. This Privacy Policy outlines how we collect, use, and protect your information when you visit and use our website.</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>We are committed to collecting minimal data necessary to provide our services. When you submit data anonymously for salary hike and purchasing power analysis, we collect:</p>
+        <ul>
+            <li><strong>Company Name (Anonymous):</strong> Used for aggregated industry analysis.</li>
+            <li><strong>Designation (Anonymous):</strong> Used for aggregated role-based analysis.</li>
+            <li><strong>Annual Salary (Anonymous):</strong> Used for salary trend analysis.</li>
+            <li><strong>Hike Year (Anonymous):</strong> Used for historical and projected hike trends.</li>
+            <li><strong>Hike Percentage (Anonymous):</strong> Used for hike trend analysis.</li>
+        </ul>
+        <p><strong>We do not collect any personally identifiable information (PII) such as your name, email address, phone number, or IP address when you submit hike data. All data submitted for analysis is anonymized and aggregated to ensure your privacy.</strong></p>
+        <p>We may also collect non-personally identifiable information through standard web analytics tools (e.g., Google Analytics) to understand website traffic, user behavior, and to improve our service. This includes information such as browser type, operating system, referring pages, and time spent on the site. This data is also aggregated and anonymized.</p>
+
+        <h2>2. How We Use Your Information</h2>
+        <p>The information we collect is used solely for the following purposes:</p>
+        <ul>
+            <li>To provide you with salary hike and purchasing power analytics.</li>
+            <li>To generate aggregated insights into job market trends in India.</li>
+            <li>To improve and optimize the functionality and user experience of our website.</li>
+            <li>For internal research and development to enhance our analytical models.</li>
+        </ul>
+        <p>Since the data you submit is anonymous, it cannot be used to identify you personally.</p>
+
+        <h2>3. Data Security</h2>
+        <p>We implement a variety of security measures to maintain the safety of your aggregated data. We use industry-standard practices to protect against unauthorized access, alteration, disclosure, or destruction of your information.</p>
+        <p>However, please remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee its absolute security.</p>
+
+        <h2>4. Cookies</h2>
+        <p>Our website may use "cookies" to enhance user experience. Cookies are small files placed on your device that allow us to recognize your browser and capture certain information. We use cookies for:</p>
+        <ul>
+            <li>Website functionality (e.g., remembering your preferences).</li>
+            <li>Analytics (e.g., tracking anonymous site usage).</li>
+        </ul>
+        <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
+
+        <h2>5. Third-Party Links</h2>
+        <p>Our Service may contain links to other sites that are not operated by us. If you click on a third-party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
+
+        <h2>6. Changes to This Privacy Policy</h2>
+        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+
+        <h2>7. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please contact us:</p>
+        <ul>
+            <li>By email: <a href="mailto:admin@checkhikes.com">admin@checkhikes.com</a></li>
+        </ul>
+    </div>
+
+    <footer>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy-policy.html" class="current-page">Privacy Policy</a></li>
+                <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+                <li><a href="disclaimer.html">Disclaimer</a></li>
+                <li><a href="hike_submission.html" >Submit hike data</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2025 checkhikes.com. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
