@@ -9,7 +9,7 @@ firebase-debug.*.log*
 npm_install_log.txt*
 
 #config files
-firebase-config.js*
+firebase-config.js
 
 # Firebase cache
 .firebase/
