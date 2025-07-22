@@ -184,3 +184,8 @@ Feel free to fork this repository, make improvements, and submit pull requests.
 
 License
 This project is open-source and available under the . (You might want to create a LICENSE file in your repo if you want to explicitly state the license).
+![checkhikes.com](https://github.com/user-attachments/assets/978de594-793a-44fe-917c-3922e5ef2c7f)
+![checkhikes.com](https://github.com/user-attachments/assets/a19ffc27-77ba-43e8-a4d5-1dd19a41ab79)
+![checkhikes.com](https://github.com/user-attachments/assets/e044a2fc-3ded-4404-b3f2-eae6bf63ce0b)
+![checkhikes.com](https://github.com/user-attachments/assets/4116364d-6f87-466c-a5bd-df694710494a)
+![checkhikes.com](https://github.com/user-attachments/assets/2cc50004-c9d7-424a-881e-3d6207ec0d22)
