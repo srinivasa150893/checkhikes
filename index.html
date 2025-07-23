@@ -6,6 +6,8 @@
     <title>checkhikes.com</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23fff' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
     <link href="./public/output.css" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6391533519121063"
+     crossorigin="anonymous"></script>
     <style>
         /* * --- Custom Styles ---
          * This section includes the new style variables and overrides for a dark theme.
@@ -271,11 +273,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-                <label for="projectionYears" class="block text-sm font-semibold mb-2">Number of Years to Project (Forward):</label>
+                <label for="projectionYears" class="block text-sm font-semibold mb-2">Predict Money value in years (Forward):</label>
                 <input type="number" id="projectionYears" placeholder="e.g., 1 (default)" max="300" class="shadow-sm">
             </div>
             <div>
-                <label for="historyYears" class="block text-sm font-semibold mb-2">Number of Years to Project (Backward):</label>
+                <label for="historyYears" class="block text-sm font-semibold mb-2">Predict Money value in years (Backward):</label>
                 <input type="number" id="historyYears" placeholder="e.g., 0 (default)" max="300" class="shadow-sm">
             </div>
         </div>
@@ -417,11 +419,11 @@
             
             // New Validation for limits
             if (projectionYears > 300) {
-                showMessage('Number of years to project forward cannot exceed 300.', 'error');
+                showMessage('Predict Money value in years forward cannot exceed 300.', 'error');
                 return;
             }
             if (historyYears > 300) {
-                showMessage('Number of years to project backward cannot exceed 300.', 'error');
+                showMessage('Predict Money value in years backward cannot exceed 300.', 'error');
                 return;
             }
             if (hikePercentage > 1000) {
