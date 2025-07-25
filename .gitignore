@@ -10,7 +10,7 @@ npm_install_log.txt*
 
 #config files
 firebase-config.js*
-
+ads.txt*
 # Firebase cache
 .firebase/
 
