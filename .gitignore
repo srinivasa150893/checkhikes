@@ -11,6 +11,8 @@ npm_install_log.txt*
 #config files
 firebase-config.js*
 ads.txt*
+my_rough_notes.txt*
+
 # Firebase cache
 .firebase/
 
