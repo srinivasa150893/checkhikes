@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const fetch = require('node-fetch'); // Import node-fetch
+const { onRequest } = require('firebase-functions/v2/https');
+const { defineSecret } = require('firebase-functions/params');
 
 admin.initializeApp(); // Initialize Firebase Admin SDK
 const db = admin.firestore(); // Get a reference to Firestore
@@ -8,14 +10,22 @@ const db = admin.firestore(); // Get a reference to Firestore
 // This is your reCAPTCHA Secret Key from Part 1.3.
 // We will set this securely as an environment variable.
 // DO NOT HARDCODE YOUR SECRET KEY HERE!
-const RECAPTCHA_SECRET_KEY = functions.config().recaptcha.secret_key;
+//const RECAPTCHA_SECRET_KEY = functions.config().recaptcha.secret_key;
+// Define your reCAPTCHA secret key as a secret parameter
+const recaptchaSecret = defineSecret('RECAPTCHA_SECRET_KEY'); // Matches the name set via CLI
 
 /**
  * Cloud Function to handle hike data submission with reCAPTCHA verification.
  * It's an HTTPS Callable Function, making it easy to call from your web client.
  */
 
-exports.submitHikeData = functions.region('asia-south1').https.onCall(async (data, context) => {
+exports.submitHikeData = onRequest(
+  {
+    region: 'asia-south1',
+    cors: true,
+    secrets: [recaptchaSecret], // Crucial: Make the secret available to this function
+  },
+  async(data, context) => {
     const { companyName, designation, annualSalary, hikeYear, hikePercentage, recaptchaToken } = data;
 
     // --- 1. Basic Server-Side Data Validation ---
@@ -44,7 +54,7 @@ exports.submitHikeData = functions.region('asia-south1').https.onCall(async (dat
             'reCAPTCHA token missing. Please refresh and try again.'
         );
     }
-
+    const RECAPTCHA_SECRET_KEY = recaptchaSecret.value();
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
 
     try {
@@ -105,3 +115,4 @@ exports.submitHikeData = functions.region('asia-south1').https.onCall(async (dat
         );
     }
 });
+
