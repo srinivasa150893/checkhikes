@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny all direct read and write access from clients.
+    // All data will be written through the secure Cloud Function.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

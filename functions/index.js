@@ -1,118 +1,138 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const fetch = require('node-fetch'); // Import node-fetch
-const { onRequest } = require('firebase-functions/v2/https');
-const { defineSecret } = require('firebase-functions/params');
-
-admin.initializeApp(); // Initialize Firebase Admin SDK
-const db = admin.firestore(); // Get a reference to Firestore
-
-// This is your reCAPTCHA Secret Key from Part 1.3.
-// We will set this securely as an environment variable.
-// DO NOT HARDCODE YOUR SECRET KEY HERE!
-//const RECAPTCHA_SECRET_KEY = functions.config().recaptcha.secret_key;
-// Define your reCAPTCHA secret key as a secret parameter
-const recaptchaSecret = defineSecret('RECAPTCHA_SECRET_KEY'); // Matches the name set via CLI
-
 /**
- * Cloud Function to handle hike data submission with reCAPTCHA verification.
- * It's an HTTPS Callable Function, making it easy to call from your web client.
+ * Import function triggers from their respective submodules:
+ *
+ * const {onCall} = require("firebase-functions/v2/https");
+ * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-exports.submitHikeData = onRequest(
-  {
-    region: 'asia-south1',
-    cors: true,
-    secrets: [recaptchaSecret], // Crucial: Make the secret available to this function
-  },
-  async(data, context) => {
-    const { companyName, designation, annualSalary, hikeYear, hikePercentage, recaptchaToken } = data;
+const {onCall, HttpsError} = require("firebase-functions/v2/https");
+const {setGlobalOptions} = require("firebase-functions/v2");
+// Import setGlobalOptions
+const {initializeApp} = require("firebase-admin/app");
+const {getFirestore, FieldValue} = require("firebase-admin/firestore");
+const {defineSecret} = require("firebase-functions/params");
+const axios = require("axios");
+const logger = require("firebase-functions/logger");
 
-    // --- 1. Basic Server-Side Data Validation ---
-    // Always validate on the server, even if client-side validation exists.
-    if (!companyName || !designation || annualSalary === undefined || isNaN(annualSalary) ||
-        hikeYear === undefined || isNaN(hikeYear) || hikePercentage === undefined || isNaN(hikePercentage)) {
-        console.error("Invalid input data:", data);
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            'Missing or invalid data for one or more fields.'
-        );
+// Set the default region for all 2nd Gen functions in this file to Mumbai
+setGlobalOptions({region: "asia-south1"});
+
+// Initialize the Firebase Admin SDK
+initializeApp();
+
+// Define the reCAPTCHA secret key using Firebase's recommended secret mgmt
+const RECAPTCHA_SECRET_KEY = defineSecret("RECAPTCHA_SECRET_KEY");
+
+/**
+ * A callable Cloud Function to receive, validate, and store hike data.
+ */
+exports.submitHikeData = onCall({
+  secrets: [RECAPTCHA_SECRET_KEY],
+}, async (request) => {
+  // --- 1. reCAPTCHA Verification ---
+  const recaptchaToken = request.data.recaptchaToken;
+  if (!recaptchaToken) {
+    logger.warn("reCAPTCHA token missing.");
+    throw new HttpsError(
+        "invalid-argument",
+        "reCAPTCHA validation failed. Please try again.",
+    );
+  }
+
+  const secretKey = RECAPTCHA_SECRET_KEY.value();
+
+  const verificationUrl = "https://www.google.com/recaptcha/api/siteverify?" +
+    `secret=${secretKey}&response=${recaptchaToken}`;
+
+  try {
+    const response = await axios.post(verificationUrl);
+    const {success, score, action} = response.data;
+
+    if (!success || score < 0.3 || action !== "submitHike") {
+      logger.error("reCAPTCHA verification failed.", response.data);
+      throw new HttpsError(
+          "unauthenticated",
+          "reCAPTCHA check failed. You might be a bot.",
+      );
     }
-    if (annualSalary < 0 || hikePercentage < 0 || hikeYear < 1900 || hikeYear > new Date().getFullYear() + 1) {
-        console.error("Value out of realistic range.");
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            'Please provide realistic values for salary, hike percentage, and year.'
-        );
-    }
+    logger.info("reCAPTCHA verification successful.");
+  } catch (error) {
+    logger.error("Error during reCAPTCHA API call:", error);
+    throw new HttpsError(
+        "internal",
+        "An internal error occurred during reCAPTCHA verification.",
+    );
+  }
 
+  // --- 2. Data Validation and Sanitization ---
+  const {
+    companyName,
+    designation,
+    annualSalary,
+    hikeYear,
+    hikePercentage,
+  } = request.data;
 
-    // --- 2. Verify reCAPTCHA Token ---
-    if (!recaptchaToken) {
-        throw new functions.https.HttpsError(
-            'unauthenticated',
-            'reCAPTCHA token missing. Please refresh and try again.'
-        );
-    }
-    const RECAPTCHA_SECRET_KEY = recaptchaSecret.value();
-    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
+  // Check for presence and basic type
+  if (
+    !companyName || typeof companyName !== "string" ||
+    !designation || typeof designation !== "string" ||
+    !annualSalary || typeof annualSalary !== "number" ||
+    !hikeYear || typeof hikeYear !== "number" ||
+    !hikePercentage || typeof hikePercentage !== "number"
+  ) {
+    throw new HttpsError("invalid-argument",
+        "Invalid data types or missing fields.");
+  }
 
-    try {
-        const recaptchaResponse = await fetch(verifyUrl, { method: 'POST' });
-        const recaptchaJson = await recaptchaResponse.json();
+  // Sanitize string inputs
+  const sanitizedCompanyName = companyName.trim();
+  const sanitizedDesignation = designation.trim();
 
-        console.log('reCAPTCHA verification response:', recaptchaJson);
+  // Perform logical validation
+  const currentYear = new Date().getFullYear();
+  if (sanitizedCompanyName.length > 100 || sanitizedDesignation.length > 100) {
+    throw new HttpsError("invalid-argument",
+        "Company or Designation name is too long.");
+  }
+  if (hikeYear < 2010 || hikeYear > currentYear + 1) {
+    throw new HttpsError("invalid-argument",
+        `Hike Year must be between 2010 and ${currentYear + 1}.`);
+  }
+  if (annualSalary <= 0 || annualSalary > 1000000000) {
+    throw new HttpsError("invalid-argument", "Invalid annual salary amount.");
+  }
+  if (hikePercentage < 0 || hikePercentage > 1000) {
+    throw new HttpsError("invalid-argument", "Hike percentage is unrealistic.");
+  }
 
-        // Check reCAPTCHA success and score
-        // A score of 0.5 is a common threshold. You can adjust this.
-        // Lower score means higher likelihood of being a bot.
-        if (!recaptchaJson.success || recaptchaJson.score < 0.5) {
-            console.warn('reCAPTCHA verification failed or low score for action:', recaptchaJson.action, 'Score:', recaptchaJson.score);
-            throw new functions.https.HttpsError(
-                'unauthenticated',
-                'reCAPTCHA verification failed. Please try again. If the problem persists, you might be flagged as a bot.'
-            );
-        }
+  // --- 3. Store Data in Firestore ---
+  try {
+    const db = getFirestore();
+    const docRef = await db.collection("hikes").add({
+      companyName: sanitizedCompanyName,
+      designation: sanitizedDesignation,
+      annualSalary: annualSalary,
+      hikeYear: hikeYear,
+      hikePercentage: hikePercentage,
+      submittedAt: FieldValue.serverTimestamp(),
+      isApproved: false, // Add an approval flag for moderation
+    });
 
-        // Optional: You can also check recaptchaJson.action if you want to ensure the action matches
-        // if (recaptchaJson.action !== 'submitHike') {
-        //     console.warn('reCAPTCHA action mismatch:', recaptchaJson.action);
-        //     throw new functions.https.HttpsError(
-        //         'unauthenticated',
-        //         'reCAPTCHA action mismatch. Please try again.'
-        //     );
-        // }
+    logger.info(`Successfully stored hike data with document ID: ${docRef.id}`);
 
-    } catch (recaptchaError) {
-        console.error('Error during reCAPTCHA verification:', recaptchaError);
-        throw new functions.https.HttpsError(
-            'internal',
-            'Failed to verify reCAPTCHA. Please try again later.'
-        );
-    }
-
-    // --- 3. Add Data to Firestore (if reCAPTCHA passes) ---
-    const hikeEntry = {
-        companyName: companyName,
-        designation: designation,
-        annualSalary: parseFloat(annualSalary),
-        hikeYear: parseInt(hikeYear),
-        hikePercentage: parseFloat(hikePercentage),
-        timestamp: admin.firestore.FieldValue.serverTimestamp(), // Use server timestamp
-        // You can also add context.auth.uid here if you decide to use Firebase Authentication
-        // submittedBy: context.auth ? context.auth.uid : 'anonymous'
+    // --- 4. Return Success Response ---
+    return {
+      success: true,
+      message: "Data submitted successfully!",
+      docId: docRef.id,
     };
-
-    try {
-        await db.collection('hikeData').add(hikeEntry);
-        console.log('Data successfully written to Firestore:', hikeEntry);
-        return { success: true, message: 'Data submitted successfully!' };
-    } catch (firestoreError) {
-        console.error('Error writing to Firestore:', firestoreError);
-        throw new functions.https.HttpsError(
-            'internal',
-            'Failed to save data to database. Please try again later.'
-        );
-    }
+  } catch (error) {
+    logger.error("Error writing to Firestore:", error);
+    throw new HttpsError("internal",
+        "Could not store data. Please try again later.");
+  }
 });
 
